@@ -1,3 +1,4 @@
+import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 import { Book, ReadingListItem } from '@tmo/shared/models';
 
@@ -14,7 +15,7 @@ export const loadReadingListError = createAction(
 
 export const addToReadingList = createAction(
   '[Books Search Results] Add to list',
-  props<{ book: Book }>()
+  props<{ book: Book, showSnackBar: boolean }>()
 );
 
 export const failedAddToReadingList = createAction(
@@ -24,12 +25,12 @@ export const failedAddToReadingList = createAction(
 
 export const confirmedAddToReadingList = createAction(
   '[Reading List API] Confirmed add to list',
-  props<{ book: Book }>()
+  props<{ book: Book, showSnackBar: boolean }>()
 );
 
 export const removeFromReadingList = createAction(
   '[Books Search Results] Remove from list',
-  props<{ item: ReadingListItem }>()
+  props<{ item: ReadingListItem, showSnackBar: boolean }>()
 );
 
 export const failedRemoveFromReadingList = createAction(
@@ -39,5 +40,10 @@ export const failedRemoveFromReadingList = createAction(
 
 export const confirmedRemoveFromReadingList = createAction(
   '[Reading List API] Confirmed remove from list',
-  props<{ item: ReadingListItem }>()
+  props<{ item: ReadingListItem, showSnackBar: boolean }>()
+);
+
+export const showSnackBar = createAction(
+  '[Reading List API] shows snackbar on ui',
+  props<{ actionType: string, item: ReadingListItem }>()
 );
