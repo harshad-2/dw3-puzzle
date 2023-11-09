@@ -8,8 +8,22 @@
       <div class="reading-list-item--details--author">
         {{ item.authors.join(',') || appConstants.SEARCH_BOOKS.NOT_AVAILABLE }}
       </div>
+      <div class="finished-confirmation" *ngIf="item.finished">
+        <span>{{ appConstants.READING_LIST_SECTION.FINISHED_READING_ON }} {{ item.finishedDate | date: appConstants.READING_LIST_SECTION.DATEFORMAT }}</span>
+      </div>
     </div>
-    <div>
+    <div class="read-div">
+      <button
+        mat-icon-button
+        class="mark-as-finished"
+        color="primary"
+        [attr.aria-label]="'Mark ' + item.title + ' as finished reading.'"
+        (click)="markAsFinished(item)"
+        *ngIf="!item.finished"
+        data-testing="mark-as-finished"
+      >
+        <mat-icon>check_circle</mat-icon>
+      </button>
       <button
         mat-icon-button
         color="warn"
