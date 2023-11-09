@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
 })
 export class BookSearchComponent {
   books$ = this.store.select(getAllBooks);
-  // getBooksError$ = this.store.select(getBooksError);
+  getBooksError$ = this.store.select(getBooksError);
   appConstants = AppConstants;
 
   searchForm = this.fb.group({
