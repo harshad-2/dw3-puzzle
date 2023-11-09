@@ -12,9 +12,12 @@ export const AppConstants = {
         WANT_TO_READ: 'Want to Read',
         DATE_FORMAT: 'M/d/yyyy',
         ERROR: 'No books found. Please try another keyword',
+        FINISHED: 'Finished',
     },
     READING_LIST_SECTION: {
         EMPTY: "You haven't added any books to your reading list yet.",
+        FINISHED_READING_ON: 'Finished reading on',
+        DATEFORMAT: 'M/d/yy hh:mm a',
     },
     API: {
         GET_BOOKS: '/api/books/search?q=',

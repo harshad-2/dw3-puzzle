@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { catchError, concatMap, exhaustMap, map } from 'rxjs/operators';
 import { ReadingListItem, AppConstants } from '@tmo/shared/models';
 import * as ReadingListActions from './reading-list.actions';
+import { Update } from '@ngrx/entity';
 
 @Injectable()
 export class ReadingListEffects implements OnInitEffects {
@@ -51,6 +52,33 @@ export class ReadingListEffects implements OnInitEffects {
           )
         )
       )
+    )
+  );
+
+  markBookFinished$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ReadingListActions.markBookAsFinished),
+      concatMap(({ item }) => {
+        return this.http
+          .put(`/api/reading-list/${item.bookId}/finished`, item)
+          .pipe(
+            map((response: ReadingListItem) => {
+              const updateItem: Update<ReadingListItem> = {
+                id: response.bookId,
+                changes: {
+                  finished: response.finished,
+                  finishedDate: response.finishedDate,
+                },
+              };
+              return ReadingListActions.confirmedMarkBookAsFinished({
+                updateItem,
+              });
+            }),
+            catchError((error) =>
+              of(ReadingListActions.failedMarkBookAsFinished(error))
+            )
+          );
+      })
     )
   );
 
