@@ -68,5 +68,23 @@ form {
   justify-content: center;
   min-height: 50vh;
   font-size: 1.5rem;
-  color: $gray40;
+  color: $gray80;
+}
+
+.highlight {
+  font-weight: bold;
+}
+
+.want-to-read-button:not(:disabled):hover, .want-to-read-button:focus {
+  background-color: $pink-very-dark;
+  color: $white;
+}
+
+.error {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: $gray85;
 }
