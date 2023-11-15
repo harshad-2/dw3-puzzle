@@ -1,43 +1,53 @@
 <form [formGroup]="searchForm" (submit)="searchBooks()">
-  <mat-form-field floatLabel="never">
+  <mat-form-field>
     <input
       autoFocus
       matInput
       type="search"
-      placeholder="Search for books to add to your reading list"
+      placeholder="{{appConstants.SEARCH_BOOKS.SEARCH_TIP}}"
       formControlName="term"
     />
-    <button mat-icon-button matSuffix>
+    <button mat-icon-button matSuffix
+      id="search" 
+      aria-label="Search"
+      role="button"
+    >
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
 </form>
 
-<ng-container *ngIf="searchTerm; else empty">
+<ng-container *ngIf="(getBooksError$ | async)">
+  <div class="error">
+    <p>{{ appConstants.SEARCH_BOOKS.ERROR }}</p>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="searchTerm && (getBooksError$ | async) === null; else !searchTerm && (getBooksError$ | async) === null && empty">
   <div class="book-grid">
-    <div class="book" data-testing="book-item" *ngFor="let b of books">
+    <div class="book" data-testing="book-item" *ngFor="let b of books$ | async; trackBy: trackByFnBooks;">
       <div class="book--title">
         {{ b.title }}
       </div>
       <div class="book--content">
         <div class="book--content--cover">
-          <img src="{{ b.coverUrl }}" />
+          <img src="{{ b.coverUrl }}" alt="Cover image" role="presentation"/>
         </div>
         <div class="book--content--info">
-          <div><strong>Author:</strong> {{ b.authors.join(',') }}</div>
-          <div><strong>Publisher:</strong> {{ b.publisher }}</div>
-          <div>
-            <strong>Published:</strong> {{ formatDate(b.publishedDate) }}
-          </div>
-          <p [innerHTML]="b.description"></p>
+          <div><span class="highlight" [attr.aria-label]="appConstants.SEARCH_BOOKS.AUTHOR">{{appConstants.SEARCH_BOOKS.AUTHOR}}: </span><span>{{ b.authors.join(',') || appConstants.SEARCH_BOOKS.NOT_AVAILABLE }}</span></div>
+          <div><span class="highlight" [attr.aria-label]="appConstants.SEARCH_BOOKS.PUBLISHER">{{appConstants.SEARCH_BOOKS.PUBLISHER}}: </span><span>{{ b.publisher || appConstants.SEARCH_BOOKS.NOT_AVAILABLE }}</span></div>
+          <div><span class="highlight" [attr.aria-label]="appConstants.SEARCH_BOOKS.PUBLISHED">{{appConstants.SEARCH_BOOKS.PUBLISHED}}: </span><span>{{ (b.publishedDate | date: appConstants.SEARCH_BOOKS.DATE_FORMAT) || appConstants.SEARCH_BOOKS.NOT_AVAILABLE }}</span></div>
+          <p aria-label="Description"> {{ b.description || appConstants.SEARCH_BOOKS.NOT_AVAILABLE }}</p>
           <div>
             <button
               mat-flat-button
+              class="want-to-read-button"
               color="primary"
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
+              [attr.aria-label]="appConstants.SEARCH_BOOKS.WANT_TO_READ"
             >
-              Want to Read
+              {{appConstants.SEARCH_BOOKS.WANT_TO_READ}}
             </button>
           </div>
         </div>

@@ -65,3 +65,8 @@ main {
 .reading-list-content {
   padding: $spacing-xxs;
 }
+
+.my-reading-list-button:hover, .my-reading-list-button:focus {
+  background-color: $pink-very-dark;
+  color: $white;
+}
