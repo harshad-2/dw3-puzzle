@@ -14,7 +14,7 @@ describe('ProductsListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [BooksFeatureModule, NoopAnimationsModule, SharedTestingModule],
-      providers: [provideMockStore({ initialState: { items: {} } }),]
+      providers: [provideMockStore({ initialState: { books: { entities: [] }, items: {} } }),]
     }).compileComponents();
     store = TestBed.inject(MockStore);
   }));
