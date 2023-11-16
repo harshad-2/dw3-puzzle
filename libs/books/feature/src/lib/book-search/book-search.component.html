@@ -11,6 +11,7 @@
       id="search" 
       aria-label="Search"
       role="button"
+      data-testing="search-books"
     >
       <mat-icon>search</mat-icon>
     </button>
@@ -46,6 +47,7 @@
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded"
               [attr.aria-label]="appConstants.SEARCH_BOOKS.WANT_TO_READ"
+              data-testing="add-book"
             >
               {{appConstants.SEARCH_BOOKS.WANT_TO_READ}}
             </button>

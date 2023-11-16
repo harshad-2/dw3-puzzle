@@ -27,5 +27,13 @@ export const AppConstants = {
         READING_LIST: 'Reading List',
         MY_READING_LIST: 'My Reading List',
         OKREADS: 'okreads',
+    },
+    SNACKBAR: {
+        ADD: 'add',
+        REMOVE: 'remove',
+        ADDED_BOOK: 'Added book',
+        REMOVED_BOOK: 'Removed book',
+        UNDO:'Undo',
+        DURATION: 3000,
     }
 }
